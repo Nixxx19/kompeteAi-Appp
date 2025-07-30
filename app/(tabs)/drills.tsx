@@ -36,7 +36,7 @@ export default function DrillsScreen() {
             { title: '6 Corner Drill', subtitle: 'Agility & reaction', icon: 'grid', color: '#22c55e' },
             { title: 'Diagonal Drill', subtitle: 'Lateral movement', icon: 'shuffle', color: '#f97316' },
             { title: 'Drill 3', subtitle: 'Precision control', icon: 'pulse', color: '#3b82f6' },
-            { title: 'Drill 4', subtitle: 'Quick footwork', icon: 'flash', color: '#8b5cf6' },
+            { title: 'Drill 5', subtitle: 'Quick footwork', icon: 'flash', color: '#8b5cf6' },
           ].map((item) => (
             <TouchableOpacity
               key={item.title}

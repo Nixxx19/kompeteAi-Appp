@@ -28,6 +28,31 @@ export default function ExerciseScreen() {
           </View>
         </View>
 
+        {/* Quick Stats */}
+        <View style={styles.statsContainer}>
+          <View style={styles.statCard}>
+            <View style={[styles.statIconContainer, { backgroundColor: '#22c55e20' }]}>
+              <Ionicons name="barbell" size={20} color="#22c55e" />
+            </View>
+            <Text style={styles.statNumber}>24</Text>
+            <Text style={styles.statLabel}>Workouts</Text>
+          </View>
+          <View style={styles.statCard}>
+            <View style={[styles.statIconContainer, { backgroundColor: '#f9731620' }]}>
+              <Ionicons name="pulse" size={20} color="#f97316" />
+            </View>
+            <Text style={styles.statNumber}>Elite</Text>
+            <Text style={styles.statLabel}>Stamina</Text>
+          </View>
+          <View style={styles.statCard}>
+            <View style={[styles.statIconContainer, { backgroundColor: '#3b82f620' }]}>
+              <Ionicons name="flame" size={20} color="#3b82f6" />
+            </View>
+            <Text style={styles.statNumber}>1320</Text>
+            <Text style={styles.statLabel}>Calories</Text>
+          </View>
+        </View>
+
         {/* Exercise Buttons */}
         <View style={styles.exercisesSection}>
           <Text style={styles.sectionTitle}>Select Exercise</Text>
@@ -52,22 +77,6 @@ export default function ExerciseScreen() {
               </View>
             </TouchableOpacity>
           ))}
-        </View>
-
-        {/* Tips Section */}
-        <View style={styles.tipsSection}>
-          <Text style={styles.sectionTitle}>Workout Tips</Text>
-          <View style={styles.tipCard}>
-            <View style={[styles.tipIcon, { backgroundColor: '#22c55e' }]}>
-              <Ionicons name="bulb" size={20} color="white" />
-            </View>
-            <View style={styles.tipContent}>
-              <Text style={styles.tipTitle}>Proper Form</Text>
-              <Text style={styles.tipText}>
-                Focus on proper form over speed. Quality repetitions are more effective than rushed movements.
-              </Text>
-            </View>
-          </View>
         </View>
 
         {/* Recent Workouts */}
@@ -129,8 +138,48 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     fontSize: 15,
   },
-  exercisesSection: {
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
     marginTop: 20,
+    marginBottom: 30,
+  },
+  statCard: {
+    width: '31%',
+    backgroundColor: 'rgba(45, 55, 72, 0.8)',
+    borderRadius: 16,
+    padding: 16,
+    alignItems: 'center',
+    minHeight: 100,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  statIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  statNumber: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  statLabel: {
+    color: '#9CA3AF',
+    fontSize: 12,
+  },
+  exercisesSection: {
+    marginTop: 10,
   },
   sectionTitle: {
     color: 'white',
@@ -170,40 +219,6 @@ const styles = StyleSheet.create({
   buttonSubtext: {
     color: '#9CA3AF',
     fontSize: 12,
-  },
-  tipsSection: {
-    marginTop: 24,
-  },
-  tipCard: {
-    backgroundColor: 'rgba(45, 55, 72, 0.8)',
-    borderRadius: 14,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  tipIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 14,
-  },
-  tipContent: {
-    flex: 1,
-  },
-  tipTitle: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  tipText: {
-    color: '#9CA3AF',
-    fontSize: 14,
-    lineHeight: 20,
   },
   activitySection: {
     marginTop: 26,

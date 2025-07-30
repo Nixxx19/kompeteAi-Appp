@@ -19,7 +19,7 @@ import {
 
 const screenWidth = Dimensions.get('window').width;
 const HORIZONTAL_PADDING = 40;
-const EXTRA_SCROLL_PADDING = 0;
+const EXTRA_SCROLL_PADDING = 30;
 
 export default function UploadScreen() {
   const [uploadStep, setUploadStep] = useState(1);
@@ -67,7 +67,7 @@ export default function UploadScreen() {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.logoContainer}>
+      <View style={styles.logoWrapper}>
         <Text style={styles.logo}>
           KOMPTE<Text style={styles.logoDot}>.</Text>
         </Text>
@@ -94,7 +94,6 @@ export default function UploadScreen() {
                 {step === 1 ? 'Upload' : step === 2 ? 'Processing' : 'Results'}
               </Text>
             </View>
-
             {i < 2 && (
               <View
                 style={[
@@ -146,12 +145,23 @@ export default function UploadScreen() {
         </View>
         <View style={styles.featureCard}>
           <CheckCircle size={20} color="#22c55e" />
-          {/* Split Performance Reports in two lines */}
           <Text style={styles.featureTitle}>
             Performance{'\n'}Reports
           </Text>
         </View>
       </View>
+
+      {selectedFile && (
+        <TouchableOpacity
+          style={styles.premiumButton}
+          onPress={() => {
+            setUploadStep(3);
+            Alert.alert('Processing Started');
+          }}
+        >
+          <Text style={styles.premiumButtonText}>Start Analysis</Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 }
@@ -164,10 +174,10 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
   },
   contentContainer: {
-    alignItems: 'flex-start',
     minHeight: Dimensions.get('window').height + EXTRA_SCROLL_PADDING,
   },
-  logoContainer: {
+  logoWrapper: {
+    alignSelf: 'flex-start',
     marginBottom: 60,
   },
   logo: {
@@ -175,7 +185,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  logoDot: { color: '#6366f1' },
+  logoDot: {
+    color: '#6366f1',
+  },
   tagline: {
     fontSize: 18,
     color: 'white',
@@ -194,15 +206,14 @@ const styles = StyleSheet.create({
   },
   stepsContainer: {
     flexDirection: 'row',
-    alignSelf: 'center',
-    width: screenWidth - HORIZONTAL_PADDING * 1.5,  // updated width
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: screenWidth - HORIZONTAL_PADDING * 1.5,
     marginBottom: 40,
+    alignSelf: 'center',
   },
   stepWrapper: {
-    flexDirection: 'column',
+    flex: 1,
     alignItems: 'center',
-    width: 80,  // slightly wider for better spacing
   },
   stepCircle: {
     width: 32,
@@ -221,10 +232,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   stepLine: {
-    width: 40,
+    width: 20,
     height: 2,
     borderRadius: 1,
-    marginHorizontal: 4,
     alignSelf: 'center',
   },
   card: {
@@ -234,6 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     width: screenWidth - HORIZONTAL_PADDING * 1.5,
+    alignSelf: 'center',
     marginBottom: 30,
   },
   icon: { marginBottom: 8 },
@@ -272,21 +283,22 @@ const styles = StyleSheet.create({
   },
   selectedFileText: {
     color: '#22c55e',
-    marginTop: 8,
+    marginTop: 12,
     fontSize: 14,
+    fontWeight: '600',
   },
   featureRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: screenWidth - HORIZONTAL_PADDING * 1.3,
-    marginBottom: 80,
-    marginLeft: 0,
+    width: screenWidth - HORIZONTAL_PADDING * 1.5,
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   featureCard: {
     flex: 1,
     backgroundColor: '#2d3748',
-    paddingVertical: 20, // reduced vertical padding
-    paddingHorizontal: 11, // reduced horizontal padding for smaller box
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     borderRadius: 12,
     alignItems: 'center',
     marginHorizontal: 8,
@@ -297,5 +309,20 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
     lineHeight: 16,
+  },
+  premiumButton: {
+    backgroundColor: '#6366f1', // dark blue
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 16,
+    marginBottom: 80,
+    width: screenWidth - HORIZONTAL_PADDING * 1.5,
+  },
+  premiumButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
