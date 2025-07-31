@@ -70,7 +70,7 @@ export default function DashboardScreen() {
 
             <TouchableOpacity
               style={styles.gridButton}
-              onPress={() => router.push('/drills')}
+              onPress={() => router.push('/(tabs)/drills')}
             >
               <View style={[styles.buttonIcon, { backgroundColor: '#f97316' }]}>
                 <Ionicons name="repeat" size={24} color="white" />

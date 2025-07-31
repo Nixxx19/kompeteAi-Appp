@@ -1,9 +1,23 @@
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import type { Route } from 'expo-router'; // ✅ Added to fix type error
 
 export default function ExerciseScreen() {
+  const exerciseRouteMap: Record<string, string> = {
+    'jumping jacks': '/(tabs)/jumpingjacks',
+    'high knees': '/(tabs)/Highknees',
+    'push ups': '/(tabs)/Pushups',
+    'squats': '/(tabs)/squats',
+  };
+
   const handleExercisePress = (exerciseType: string) => {
-    console.log(`Selected exercise: ${exerciseType}`);
+    const route = exerciseRouteMap[exerciseType.toLowerCase()];
+    if (route) {
+      router.push(route as Route); // ✅ Fix: cast to Route type
+    } else {
+      console.warn('No route defined for:', exerciseType);
+    }
   };
 
   return (
@@ -28,7 +42,7 @@ export default function ExerciseScreen() {
           </View>
         </View>
 
-        {/* Quick Stats */}
+        {/* Stats */}
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <View style={[styles.statIconContainer, { backgroundColor: '#22c55e20' }]}>
@@ -53,7 +67,7 @@ export default function ExerciseScreen() {
           </View>
         </View>
 
-        {/* Exercise Buttons */}
+        {/* Exercises */}
         <View style={styles.exercisesSection}>
           <Text style={styles.sectionTitle}>Select Exercise</Text>
 

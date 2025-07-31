@@ -1,5 +1,6 @@
 import { Tabs, usePathname } from 'expo-router';
 import { Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for fitness icon
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -7,13 +8,13 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-// Define your own valid SF Symbol strings
 type ValidIconName =
   | 'target'
   | 'square.and.arrow.up'
   | 'figure.walk'
   | 'gauge.with.dots.needle.0percent'
   | 'house.fill'
+  | 'heart.fill'
   | 'person.fill'
   | 'chart.bar.fill';
 
@@ -22,24 +23,27 @@ export default function TabLayout() {
   const pathname = usePathname();
 
   const currentRoute = pathname.split('/').pop() || 'index';
-  const dynamicTabs = ['drills', 'upload', 'exercise', 'calibration'];
 
-  const dynamicTabIconMap: Record<
-    string,
-    { icon: ValidIconName; label: string }
-  > = {
+  // Group these all under the same Exercise tab
+  const exerciseScreens = ['exercise', 'jumpingjacks', 'pushups', 'squats', 'highknees'];
+
+  const dynamicTabs = ['drills', 'upload', 'calibration', ...exerciseScreens];
+
+  const dynamicTabIconMap: Record<string, { icon: ValidIconName; label: string }> = {
     drills: { icon: 'target', label: 'Drills' },
     upload: { icon: 'square.and.arrow.up', label: 'Upload' },
-    exercise: { icon: 'figure.walk', label: 'Exercise' },
-    calibration: {
-      icon: 'gauge.with.dots.needle.0percent',
-      label: 'Calibration',
-    },
+    calibration: { icon: 'gauge.with.dots.needle.0percent', label: 'Calibration' },
+
+    // Exercise tabs
+    exercise: { icon: 'figure.walk', label: 'Exercise' }, // Keep this as 'figure.walk'
+    jumpingjacks: { icon: 'figure.walk', label: 'Jumping Jacks' },
+    pushups: { icon: 'figure.walk', label: 'Push Ups' },
+    squats: { icon: 'figure.walk', label: 'Squats' },
+    highknees: { icon: 'figure.walk', label: 'High Knees' },
   };
 
-  const currentDynamic = dynamicTabs.includes(currentRoute)
-    ? currentRoute
-    : 'drills';
+  // Determine if current route is an exercise sub screen (not the main 'exercise')
+  const isSubExercise = exerciseScreens.includes(currentRoute) && currentRoute !== 'exercise';
 
   return (
     <Tabs
@@ -81,19 +85,53 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name={currentDynamic}
-        options={{
-          title: dynamicTabIconMap[currentDynamic].label,
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={dynamicTabIconMap[currentDynamic].icon}
-              color={color}
-            />
-          ),
-        }}
-      />
+
+      {/* Always show Exercise tab if current route is any exercise screen */}
+      {exerciseScreens.includes(currentRoute) && (
+        <Tabs.Screen
+          name="exercise"
+          options={{
+            title: dynamicTabIconMap['exercise'].label,
+            tabBarIcon: ({ color }) => (
+              <IconSymbol size={28} name="heart.fill" color={color} />
+            ),
+          }}
+        />
+      )}
+
+      {/* Show the specific exercise tab ONLY when on a sub-exercise route */}
+      {isSubExercise && (
+        <Tabs.Screen
+          name={currentRoute}
+          options={{
+            title: dynamicTabIconMap[currentRoute].label,
+            tabBarIcon: ({ color }) => (
+              <IconSymbol
+                size={28}
+                name={dynamicTabIconMap[currentRoute].icon}
+                color={color}
+              />
+            ),
+          }}
+        />
+      )}
+
+      {/* Show other dynamic tabs when on them */}
+      {!exerciseScreens.includes(currentRoute) && dynamicTabs.includes(currentRoute) && (
+        <Tabs.Screen
+          name={currentRoute}
+          options={{
+            title: dynamicTabIconMap[currentRoute].label,
+            tabBarIcon: ({ color }) => (
+              <IconSymbol
+                size={28}
+                name={dynamicTabIconMap[currentRoute].icon}
+                color={color}
+              />
+            ),
+          }}
+        />
+      )}
     </Tabs>
   );
 }
