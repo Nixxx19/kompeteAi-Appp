@@ -24,7 +24,8 @@ type ValidIconName =
   | 'figure.mixed.cardio'
   | 'figure.taichi'
   | 'figure.core.training'
-  | 'figure.highintensity.intervaltraining';
+  | 'figure.highintensity.intervaltraining'
+  | 'chart.line.text.clipboard'; // ADDED: Analytics icon
 
 // Helper function to map SF Symbols to Ionicons (fallback)
 const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap => {
@@ -43,6 +44,7 @@ const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap =
     'figure.taichi': 'fitness',
     'figure.core.training': 'fitness',
     'figure.highintensity.intervaltraining': 'fitness',
+    'chart.line.text.clipboard': 'analytics', // ADDED: Analytics icon mapping
   };
   return iconMap[sfSymbolName] || 'ellipse';
 };
@@ -70,7 +72,7 @@ function CustomScrollableTabBar({ currentRoute, onTabPress }: { currentRoute: st
   
   const dynamicTabIconMap: Record<string, { icon: ValidIconName; label: string }> = {
     drills: { icon: 'figure.highintensity.intervaltraining', label: 'Drills' },
-    upload: { icon: 'square.and.arrow.up', label: 'Upload' },
+    upload: { icon: 'chart.line.text.clipboard', label: 'Analytics' }, // CHANGED: Icon and label for analytics
     calibration: { icon: 'speedometer', label: 'Calibration' },
     exercise: { icon: 'figure.cooldown', label: 'Exercise' },
     jumpingjacks: { icon: 'figure.mixed.cardio', label: 'Jumping Jacks' },

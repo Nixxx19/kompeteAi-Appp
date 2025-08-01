@@ -1,8 +1,53 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Target, Zap, Clock, TrendingUp, Activity, BarChart3 } from 'lucide-react-native';
 import { router } from 'expo-router';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
+// Helper function to map SF Symbols to Ionicons (fallback for Android)
+const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap => {
+  const iconMap: Record<string, keyof typeof Ionicons.glyphMap> = {
+    // Quick Stats icons
+    'trophy.fill': 'trophy',
+    'chart.line.uptrend.xyaxis': 'trending-up',
+    'star.fill': 'star',
+    
+    // Quick Actions icons
+    'figure.cooldown': 'fitness',
+    'chart.line.text.clipboard': 'analytics', // UPDATED: Analytics icon
+    'figure.highintensity.intervaltraining': 'fitness',
+    'gearshape.fill': 'settings',
+    
+    // Recent Activity icons
+    'chart.bar.fill': 'analytics',
+    'figure.walk': 'fitness',
+    
+    // Tips icon
+    'lightbulb.fill': 'bulb',
+  };
+  return iconMap[sfSymbolName] || 'ellipse';
+};
+
+// Cross-platform Icon Component
+const CrossPlatformIcon = ({ sfSymbol, size, color }: { sfSymbol: string; size: number; color: string }) => {
+  if (Platform.OS === 'ios') {
+    return (
+      <IconSymbol 
+        size={size} 
+        name={sfSymbol as any}
+        color={color}
+      />
+    );
+  } else {
+    return (
+      <Ionicons 
+        size={size} 
+        name={getIoniconsName(sfSymbol)} 
+        color={color}
+      />
+    );
+  }
+};
 
 export default function DashboardScreen() {
   return (
@@ -29,21 +74,21 @@ export default function DashboardScreen() {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <View style={styles.statIconContainer}>
-              <Ionicons name="trophy" size={20} color="#22c55e" />
+              <CrossPlatformIcon sfSymbol="trophy.fill" size={20} color="#22c55e" />
             </View>
             <Text style={styles.statNumber}>12</Text>
             <Text style={styles.statLabel}>Matches</Text>
           </View>
           <View style={styles.statCard}>
             <View style={styles.statIconContainer}>
-              <Ionicons name="trending-up" size={20} color="#f97316" />
+              <CrossPlatformIcon sfSymbol="chart.line.uptrend.xyaxis" size={20} color="#f97316" />
             </View>
             <Text style={styles.statNumber}>78%</Text>
             <Text style={styles.statLabel}>Win Rate</Text>
           </View>
           <View style={styles.statCard}>
             <View style={styles.statIconContainer}>
-              <Ionicons name="star" size={20} color="#3b82f6" />
+              <CrossPlatformIcon sfSymbol="star.fill" size={20} color="#3b82f6" />
             </View>
             <Text style={styles.statNumber}>4.2</Text>
             <Text style={styles.statLabel}>Avg Rating</Text>
@@ -57,48 +102,52 @@ export default function DashboardScreen() {
         <View style={styles.buttonGrid}>
           {/* First Row */}
           <View style={styles.buttonRow}>
+            {/* 1st Button: Exercise */}
             <TouchableOpacity
               style={styles.gridButton}
               onPress={() => router.push('/(tabs)/exercise')}
             >
               <View style={[styles.buttonIcon, { backgroundColor: '#22c55e' }]}>
-                <Ionicons name="fitness" size={24} color="white" />
+                <CrossPlatformIcon sfSymbol="figure.cooldown" size={24} color="white" />
               </View>
               <Text style={styles.gridButtonText}>Exercise</Text>
               <Text style={styles.buttonSubtext}>Training routines</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.gridButton}
-              onPress={() => router.push('/(tabs)/drills')}
-            >
-              <View style={[styles.buttonIcon, { backgroundColor: '#f97316' }]}>
-                <Ionicons name="repeat" size={24} color="white" />
-              </View>
-              <Text style={styles.gridButtonText}>Drills</Text>
-              <Text style={styles.buttonSubtext}>Practice sessions</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Second Row */}
-          <View style={styles.buttonRow}>
+            {/* 2nd Button: Analytics */}
             <TouchableOpacity
               style={styles.gridButton}
               onPress={() => router.push('/(tabs)/upload')}
             >
               <View style={[styles.buttonIcon, { backgroundColor: '#3b82f6' }]}>
-                <Ionicons name="cloud-upload" size={24} color="white" />
+                <CrossPlatformIcon sfSymbol="chart.line.text.clipboard" size={24} color="white" />
               </View>
-              <Text style={styles.gridButtonText}>Upload</Text>
-              <Text style={styles.buttonSubtext}>New match video</Text>
+              <Text style={styles.gridButtonText}>Analytics</Text>
+              <Text style={styles.buttonSubtext}>Data insights</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Second Row */}
+          <View style={styles.buttonRow}>
+            {/* 3rd Button: Drills */}
+            <TouchableOpacity
+              style={styles.gridButton}
+              onPress={() => router.push('/(tabs)/drills')}
+            >
+              <View style={[styles.buttonIcon, { backgroundColor: '#f97316' }]}>
+                <CrossPlatformIcon sfSymbol="figure.highintensity.intervaltraining" size={24} color="white" />
+              </View>
+              <Text style={styles.gridButtonText}>Drills</Text>
+              <Text style={styles.buttonSubtext}>Practice sessions</Text>
             </TouchableOpacity>
 
+            {/* 4th Button: Calibration */}
             <TouchableOpacity
               style={styles.gridButton}
               onPress={() => router.push('/(tabs)/calibration')}
             >
               <View style={[styles.buttonIcon, { backgroundColor: '#8b5cf6' }]}>
-                <Ionicons name="settings" size={24} color="white" />
+                <CrossPlatformIcon sfSymbol="gearshape.fill" size={24} color="white" />
               </View>
               <Text style={styles.gridButtonText}>Calibration</Text>
               <Text style={styles.buttonSubtext}>System setup</Text>
@@ -113,7 +162,7 @@ export default function DashboardScreen() {
         <View style={styles.activityList}>
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#22c55e' }]}>
-              <Ionicons name="trophy" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="trophy.fill" size={24} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Match Won</Text>
@@ -124,7 +173,7 @@ export default function DashboardScreen() {
 
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#3b82f6' }]}>
-              <Ionicons name="analytics" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="chart.bar.fill" size={24} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Analysis Complete</Text>
@@ -135,7 +184,7 @@ export default function DashboardScreen() {
 
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#f97316' }]}>
-              <Ionicons name="fitness" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="figure.walk" size={24} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Exercise Completed</Text>
@@ -151,7 +200,7 @@ export default function DashboardScreen() {
         <Text style={styles.sectionTitle}>Today's Tip</Text>
         <View style={styles.tipCard}>
           <View style={[styles.tipIcon, { backgroundColor: '#8b5cf6' }]}>
-            <Ionicons name="bulb" size={20} color="white" />
+            <CrossPlatformIcon sfSymbol="lightbulb.fill" size={20} color="white" />
           </View>
           <View style={styles.tipContent}>
             <Text style={styles.tipTitle}>Improve Your Serve</Text>
@@ -165,9 +214,10 @@ export default function DashboardScreen() {
   );
 }
 
+// ... rest of your styles remain exactly the same
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1a1a2e', // Dark blue-purple background
+    backgroundColor: '#1a1a2e',
     paddingHorizontal: 40,
     paddingVertical: 80,
     minHeight: '110%',
@@ -185,7 +235,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   logoDot: {
-    color: '#6366f1', // Vibrant blue-purple for the dot
+    color: '#6366f1',
   },
   tagline: {
     fontSize: 18,
@@ -406,4 +456,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: 'System',
   },
-}); 
+});
