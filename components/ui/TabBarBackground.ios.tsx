@@ -2,7 +2,8 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 
-export default function BlurTabBarBackground() {
+// Change this function name from BlurTabBarBackground to TabBarBackground
+export default function TabBarBackground() {
   return (
     <BlurView
       // System chrome material automatically adapts to the system's theme
