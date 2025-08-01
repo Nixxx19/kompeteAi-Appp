@@ -18,7 +18,13 @@ type ValidIconName =
   | 'house.fill'
   | 'heart.fill'
   | 'person.fill'
-  | 'chart.bar.fill';
+  | 'chart.bar.fill'
+  | 'figure.cooldown'
+  | 'figure.cross.training'
+  | 'figure.mixed.cardio'
+  | 'figure.taichi'
+  | 'figure.core.training'
+  | 'figure.highintensity.intervaltraining';
 
 // Helper function to map SF Symbols to Ionicons (fallback)
 const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap => {
@@ -31,6 +37,12 @@ const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap =
     'target': 'locate',
     'square.and.arrow.up': 'share',
     'speedometer': 'speedometer',
+    'figure.cooldown': 'fitness',
+    'figure.cross.training': 'fitness',
+    'figure.mixed.cardio': 'fitness',
+    'figure.taichi': 'fitness',
+    'figure.core.training': 'fitness',
+    'figure.highintensity.intervaltraining': 'fitness',
   };
   return iconMap[sfSymbolName] || 'ellipse';
 };
@@ -57,14 +69,14 @@ function CustomScrollableTabBar({ currentRoute, onTabPress }: { currentRoute: st
   const dynamicTabs = ['drills', 'upload', 'calibration', ...exerciseScreens];
   
   const dynamicTabIconMap: Record<string, { icon: ValidIconName; label: string }> = {
-    drills: { icon: 'target', label: 'Drills' },
+    drills: { icon: 'figure.highintensity.intervaltraining', label: 'Drills' },
     upload: { icon: 'square.and.arrow.up', label: 'Upload' },
     calibration: { icon: 'speedometer', label: 'Calibration' },
-    exercise: { icon: 'figure.stand', label: 'Exercise' },
-    jumpingjacks: { icon: 'figure.stand', label: 'Jumping Jacks' },
-    Pushups: { icon: 'figure.stand', label: 'Push Ups' },
-    squats: { icon: 'figure.stand', label: 'Squats' },
-    Highknees: { icon: 'figure.stand', label: 'High Knees' },
+    exercise: { icon: 'figure.cooldown', label: 'Exercise' },
+    jumpingjacks: { icon: 'figure.mixed.cardio', label: 'Jumping Jacks' },
+    Pushups: { icon: 'figure.core.training', label: 'Push Ups' },
+    squats: { icon: 'figure.cross.training', label: 'Squats' },
+    Highknees: { icon: 'figure.taichi', label: 'High Knees' },
   };
 
   const staticTabs = [
@@ -78,7 +90,7 @@ function CustomScrollableTabBar({ currentRoute, onTabPress }: { currentRoute: st
   let visibleTabs = [...staticTabs];
   
   if (exerciseScreens.includes(currentRoute)) {
-    visibleTabs.push({ route: 'exercise', icon: 'heart.fill', label: 'Exercise' });
+    visibleTabs.push({ route: 'exercise', icon: 'figure.cooldown', label: 'Exercise' });
   }
   
   if (isSubExercise) {
