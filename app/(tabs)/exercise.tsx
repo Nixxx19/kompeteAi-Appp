@@ -1,7 +1,27 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 import { router } from 'expo-router';
-import type { Route } from 'expo-router'; // ✅ Added to fix type error
+import type { Route } from 'expo-router';
+
+// Cross-platform icon component with type assertion to bypass strict typing
+const CrossPlatformIcon = ({ 
+  sfSymbol, 
+  ionicon, 
+  size, 
+  color 
+}: { 
+  sfSymbol: string; 
+  ionicon: string; // Changed to string to avoid type issues
+  size: number; 
+  color: string; 
+}) => {
+  if (Platform.OS === 'ios') {
+    return <IconSymbol size={size} name={sfSymbol as any} color={color} />;
+  } else {
+    return <Ionicons size={size} name={ionicon as any} color={color} />;
+  }
+};
 
 export default function ExerciseScreen() {
   const exerciseRouteMap: Record<string, string> = {
@@ -14,7 +34,7 @@ export default function ExerciseScreen() {
   const handleExercisePress = (exerciseType: string) => {
     const route = exerciseRouteMap[exerciseType.toLowerCase()];
     if (route) {
-      router.push(route as Route); // ✅ Fix: cast to Route type
+      router.push(route as Route);
     } else {
       console.warn('No route defined for:', exerciseType);
     }
@@ -46,21 +66,36 @@ export default function ExerciseScreen() {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <View style={[styles.statIconContainer, { backgroundColor: '#22c55e20' }]}>
-              <Ionicons name="barbell" size={20} color="#22c55e" />
+              <CrossPlatformIcon 
+                sfSymbol="figure.yoga" 
+                ionicon="body" 
+                size={20} 
+                color="#22c55e" 
+              />
             </View>
             <Text style={styles.statNumber}>24</Text>
             <Text style={styles.statLabel}>Workouts</Text>
           </View>
           <View style={styles.statCard}>
             <View style={[styles.statIconContainer, { backgroundColor: '#f9731620' }]}>
-              <Ionicons name="pulse" size={20} color="#f97316" />
+              <CrossPlatformIcon 
+                sfSymbol="waveform.path" 
+                ionicon="pulse" 
+                size={20} 
+                color="#f97316" 
+              />
             </View>
             <Text style={styles.statNumber}>Elite</Text>
             <Text style={styles.statLabel}>Stamina</Text>
           </View>
           <View style={styles.statCard}>
             <View style={[styles.statIconContainer, { backgroundColor: '#3b82f620' }]}>
-              <Ionicons name="flame" size={20} color="#3b82f6" />
+              <CrossPlatformIcon 
+                sfSymbol="flame.fill" 
+                ionicon="flame" 
+                size={20} 
+                color="#3b82f6" 
+              />
             </View>
             <Text style={styles.statNumber}>1320</Text>
             <Text style={styles.statLabel}>Calories</Text>
@@ -72,10 +107,34 @@ export default function ExerciseScreen() {
           <Text style={styles.sectionTitle}>Select Exercise</Text>
 
           {[
-            { title: 'Jumping Jacks', subtitle: 'Cardio workout', icon: 'accessibility', color: '#22c55e' },
-            { title: 'High Knees', subtitle: 'Leg strengthening', icon: 'chevron-up', color: '#f97316' },
-            { title: 'Push Ups', subtitle: 'Upper body strength', icon: 'fitness', color: '#3b82f6' },
-            { title: 'Squats', subtitle: 'Lower body power', icon: 'barbell', color: '#8b5cf6' },
+            { 
+              title: 'Jumping Jacks', 
+              subtitle: 'Cardio workout', 
+              sfSymbol: 'figure.mixed.cardio',
+              ionicon: 'body', 
+              color: '#22c55e' 
+            },
+            { 
+              title: 'High Knees', 
+              subtitle: 'Leg strengthening', 
+              sfSymbol: 'figure.taichi',
+              ionicon: 'arrow-up', 
+              color: '#f97316' 
+            },
+            { 
+              title: 'Push Ups', 
+              subtitle: 'Upper body strength', 
+              sfSymbol: 'figure.core.training',
+              ionicon: 'body', 
+              color: '#3b82f6' 
+            },
+            { 
+              title: 'Squats', 
+              subtitle: 'Lower body power', 
+              sfSymbol: 'figure.cross.training',
+              ionicon: 'body', 
+              color: '#8b5cf6' 
+            },
           ].map((item) => (
             <TouchableOpacity
               key={item.title}
@@ -83,9 +142,14 @@ export default function ExerciseScreen() {
               onPress={() => handleExercisePress(item.title.toLowerCase())}
             >
               <View style={[styles.buttonIcon, { backgroundColor: item.color }]}>
-                <Ionicons name={item.icon as any} size={24} color="white" />
+                <CrossPlatformIcon
+                  sfSymbol={item.sfSymbol}
+                  ionicon={item.ionicon}
+                  size={24}
+                  color="white"
+                />
               </View>
-              <View>
+              <View style={{ justifyContent: 'center' }}>
                 <Text style={styles.gridButtonText}>{item.title}</Text>
                 <Text style={styles.buttonSubtext}>{item.subtitle}</Text>
               </View>
@@ -114,6 +178,7 @@ export default function ExerciseScreen() {
   );
 }
 
+// ... [All your existing styles remain the same]
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1a1a2e',
