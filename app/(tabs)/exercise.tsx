@@ -79,7 +79,7 @@ export default function ExerciseScreen() {
           <View style={styles.statCard}>
             <View style={[styles.statIconContainer, { backgroundColor: '#f9731620' }]}>
               <CrossPlatformIcon 
-                sfSymbol="waveform.path" 
+                sfSymbol="waveform.path.ecg" 
                 ionicon="pulse" 
                 size={20} 
                 color="#f97316" 
