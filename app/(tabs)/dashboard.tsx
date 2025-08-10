@@ -1,8 +1,7 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Target, Zap, Clock, TrendingUp, Activity, BarChart3 } from 'lucide-react-native';
-import { router } from 'expo-router';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 // Helper function to map SF Symbols to Ionicons (fallback for Android)
 const getIoniconsName = (sfSymbolName: string): keyof typeof Ionicons.glyphMap => {
@@ -162,7 +161,7 @@ export default function DashboardScreen() {
         <View style={styles.activityList}>
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#22c55e' }]}>
-              <CrossPlatformIcon sfSymbol="trophy.fill" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="trophy.fill" size={30} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Match Won</Text>
@@ -173,7 +172,7 @@ export default function DashboardScreen() {
 
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#3b82f6' }]}>
-              <CrossPlatformIcon sfSymbol="chart.bar.fill" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="chart.bar.fill" size={30} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Analysis Complete</Text>
@@ -184,7 +183,7 @@ export default function DashboardScreen() {
 
           <TouchableOpacity style={styles.activityItem}>
             <View style={[styles.activityIcon, { backgroundColor: '#f97316' }]}>
-              <CrossPlatformIcon sfSymbol="figure.walk" size={24} color="white" />
+              <CrossPlatformIcon sfSymbol="figure.walk" size={30} color="white" />
             </View>
             <View style={styles.activityContent}>
               <Text style={styles.activityTitle}>Exercise Completed</Text>
@@ -370,7 +369,7 @@ const styles = StyleSheet.create({
   activityItem: {
     backgroundColor: 'rgba(45, 55, 72, 0.8)',
     borderRadius: 16,
-    padding: 16,
+    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
@@ -380,14 +379,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+    width: '100%',
+    alignSelf: 'center',
   },
   activityIcon: {
-    width: 53,
-    height: 53,
+    width: 55,
+    height: 55,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 19,
+    marginLeft: 10,
   },
   activityContent: {
     flex: 1,
