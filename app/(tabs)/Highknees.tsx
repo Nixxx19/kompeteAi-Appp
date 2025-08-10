@@ -238,11 +238,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   stepLine: {
-    width: 20,
+    width: 60,
     height: 2,
     borderRadius: 1,
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: -16,
   },
   card: {
     backgroundColor: 'rgba(45, 55, 72, 0.8)',

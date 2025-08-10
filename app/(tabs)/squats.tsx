@@ -2,14 +2,14 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera, CheckCircle, Lightbulb, Upload as UploadIcon, Video } from 'lucide-react-native';
 import React from 'react';
 import {
-    Alert,
-    Dimensions,
-    Linking,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Dimensions,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
@@ -246,11 +246,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   stepLine: {
-    width: 20,
+    width: 60,
     height: 2,
     borderRadius: 1,
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: -16,
   },
   card: {
     backgroundColor: 'rgba(45, 55, 72, 0.8)',
