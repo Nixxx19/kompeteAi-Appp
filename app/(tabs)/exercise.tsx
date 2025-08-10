@@ -1,8 +1,8 @@
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import type { Route } from 'expo-router';
+import { router } from 'expo-router';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 // Cross-platform icon component with type assertion to bypass strict typing
 const CrossPlatformIcon = ({ 
@@ -41,12 +41,7 @@ export default function ExerciseScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#1a1a2e' }}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 60 }}
-        showsVerticalScrollIndicator={false}
-      >
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.headerSection}>
           <View style={styles.logoContainer}>
@@ -174,7 +169,6 @@ export default function ExerciseScreen() {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -182,40 +176,45 @@ export default function ExerciseScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1a1a2e',
-    paddingHorizontal: 24,
-    paddingTop: 40,
+    paddingHorizontal: 40,
+    paddingVertical: 80,
+    minHeight: '110%',
   },
   headerSection: {
-    marginBottom: 20,
+    paddingBottom:20,
   },
   logoContainer: {
-    marginBottom: 30,
+    marginBottom: 60,
   },
   logo: {
-    fontSize: 48,
+    fontSize: 61,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'System',
   },
   logoDot: {
     color: '#6366f1',
   },
   tagline: {
-    fontSize: 16,
+    fontSize: 18,
     color: 'white',
     marginTop: 2,
+    fontFamily: 'System',
   },
   welcomeSection: {
-    marginTop: 10,
+    marginTop: 1,
   },
   welcomeText: {
     color: 'white',
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '600',
-    marginBottom: 6,
+    fontFamily: 'System',
+    marginBottom: 13,
   },
   subtitleText: {
     color: '#9CA3AF',
-    fontSize: 15,
+    fontSize: 17,
+    fontFamily: 'System',
   },
   statsContainer: {
     flexDirection: 'row',
